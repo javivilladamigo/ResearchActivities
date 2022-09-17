@@ -1,6 +1,6 @@
 # Standard connection process:
 
-* If not connected from remote, you first need to access the gate:
+* If not connected from the local network, you first need to access the gate:
 
 ```$ ssh jamarino@gate.pd.infn.it```
 
