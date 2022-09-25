@@ -2,3 +2,4 @@
 *.root
 __pycache__/
 MadGraph5_aMCatNLO/
+*.pdf
