@@ -1,3 +1,4 @@
 .DS_Store
 *.root
 __pycache__/
+MadGraph5_aMCatNLO/
