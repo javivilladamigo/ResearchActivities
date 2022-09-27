@@ -3,3 +3,4 @@
 __pycache__/
 MadGraph5_aMCatNLO/
 *.pdf
+data.nosync/
