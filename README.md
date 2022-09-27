@@ -11,6 +11,15 @@ and enter the password when prompted.
 
 and enter your t2 password (which may differ from the gate one) when prompted.
 
+* Enter the cms environment:
+
+```$ cmsenv```
+
+* and enter the proxy for gaining access to the grid:
+
+```$ X509_USER_PROXY=/homeui/zucchett/tmp/x509up```
+
+
 # About passwords:
 
 * To change the password for jamarino@pd.infn.it (which is the same one as the gate):
