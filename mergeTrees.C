@@ -24,5 +24,5 @@ void mergeTrees (std::string data_dir = "data.nosync/") {
     mergedTree->SetName("mergedEvents");
     mergedTree->Write();
     mergedFile->Close();
-    cout << endl << "Merging successfully completed. Trees have been saved as mergedTree in mergedFile.root" << endl;
+    cout << endl << "Merging successfully completed. Trees have been saved as mergedEvents in mergedFile.root" << endl;
 }
