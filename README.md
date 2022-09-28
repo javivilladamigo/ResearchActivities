@@ -39,6 +39,11 @@ and (if I remember correctly) prompt the current password and the new password (
 
 using the option ```-r``` (recursive) to copying entire folders. The option ```-J``` first makes an scp connection to the jump host (for more info refer to the [docs](https://man7.org/linux/man-pages/man1/scp.1.html)).
 
+* Bear in mind that the analyzed files are actually in the directory ```/lustre/cmswork/jamarino/...```. For example:
+
+```$ scp -r -J jamarino@gate.pd.infn.it jamarino@t2-ui-12:/lustre/cmswork/jamarino/CMSSW_10_6_20/src/NanoSkim/Skimmer/OutputTest/ /Users/javi/Documents/Padova/Research.nosync/ResearchActivities/data.nosync/```
+
+
 
 
 # Copying files from local to remote: (**this is still to be checked**)
