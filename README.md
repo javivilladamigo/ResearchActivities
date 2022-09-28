@@ -46,7 +46,7 @@ using the option ```-r``` (recursive) to copying entire folders. The option ```-
 
 
 
-# Copying files from local to remote: (**this is still to be checked**)
+# Copying files from local to remote: (untested)
 * From the local machine:
 
 ```$ scp -p 2222 /path/to/the/file -J jamarino@gate.pd.infn.it jamarino@t2-ui-12:/homeui```
