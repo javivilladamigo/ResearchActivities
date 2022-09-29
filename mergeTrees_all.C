@@ -26,7 +26,7 @@ void mergeTrees_all(const char *dirname="data.nosync/OutputTest/", const char *e
             
             if (!file->IsDirectory() && fname.EndsWith(ext) && fname != ".DS_Store" && fname != outputFile)
             {
-                cout << " * Adding " << fname.Data() << " for merging..." << endl;
+                cout << "* Adding " << fname.Data() << " for merging..." << endl;
                 f = new TFile(dirname + fname);
                 TTree *tree = (TTree*)f->Get(inputTree);
                 cout << "nEvents: " << tree->GetEntries() << endl;
@@ -39,8 +39,8 @@ void mergeTrees_all(const char *dirname="data.nosync/OutputTest/", const char *e
         
         if (correctFiles_found)
         {
-            TFile *mergedFile = new TFile(dirname + outputFile, "RECREATE");
             cout << endl << "Merging...";
+            TFile *mergedFile = new TFile(dirname + outputFile, "RECREATE");
             TTree *mergedTree = TTree::MergeTrees(list);
             totEntries = mergedTree->GetEntries();
 
