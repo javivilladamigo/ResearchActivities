@@ -1,4 +1,4 @@
-void mergeTrees_all(const char *dirname="data.nosync/OutputTest/", const char *ext=".root", TString inputTree = "Events", TString outputTree = "mergedEvents", TString outputFile = "mergedFile.root")
+void mergeTrees_all(const char *dirname="data.nosync/OutputTest/", const char *ext=".root", TString inputTree = "Events", TString outputTree = "mergedEvents", TString outputFile = "GluGluToH_HToJPsiG_JPsiToMuMu_TuneCP5_13TeV-madgraph-pythia8_RunIISummer20UL18.root")
 {
     
     
