@@ -46,12 +46,12 @@ using the option ```-r``` (recursive) to copying entire folders. The option ```-
 
 
 
-# Copying files from local to remote: (untested)
+# Copying files from local to remote:
 * From the local machine:
 
-```$ scp -p 2222 /path/to/the/file -J jamarino@gate.pd.infn.it jamarino@t2-ui-12:/homeui```
+```$ scp -oProxyJump=jamarino@gate.pd.infn.it /path/to/file jamarino@t2-ui-12:/destination/```
 
-or 
+or (untested):
 
 ```$ scp -P 2222 file.ext username@domain:~/```
 
