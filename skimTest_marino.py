@@ -8,7 +8,7 @@ from PhysicsTools.NanoAODTools.postprocessing.modules.common.muonScaleResProduce
 from PhysicsTools.NanoAODTools.postprocessing.modules.btv.btagSFProducer import *
 from samesign import *
 from hzz4l import *
-from higgs import *
+from higgs_marino import *
 from triggerJPsi import *
 from triggerMuPhoton import *
 from triggerPhoton import *
@@ -92,7 +92,7 @@ elif "Run2018" in fileList[0]:
 
 #p = PostProcessor(outputDir=options.output, inputFiles=fileList, cut="(nMuon + nElectron >= 4)", branchsel=None, modules=[HZZ4L()], jsonInput=jsonFile, histFileName=None, histDirName=None, outputbranchsel=MAINDIR + "keep_and_drop_higgs.txt", maxEntries=long(options.maxEntries))
 
-p = PostProcessor(outputDir=options.output, inputFiles=fileList, cut=(None if 'JPsiG' in fileList[0] else "(nMuon >= 2 && nPhoton >= 1)"), branchsel=None, modules=[muonRoccoR(),Higgs()], jsonInput=jsonFile, histFileName=None, histDirName=None, outputbranchsel=MAINDIR + "keep_and_drop_higgs.txt", maxEntries=long(options.maxEntries))
+p = PostProcessor(outputDir=options.output, inputFiles=fileList, cut=(None if 'JPsiG' in fileList[0] else "(nMuon >= 2 && nPhoton >= 1)"), branchsel=None, modules=[Higgs()], jsonInput=None, histFileName=None, histDirName=None, outputbranchsel=MAINDIR + "keep_and_drop_higgs_marino.txt", maxEntries=long(options.maxEntries))
 
 #p = PostProcessor(outputDir=options.output, inputFiles=fileList, cut="(nMuon>=2 && Muon_pt[1]>5.)", branchsel=None, modules=[TriggerJPsi()], jsonInput=jsonFile, histFileName=None, histDirName=None, outputbranchsel=MAINDIR + "keep_and_drop_trigger.txt", maxEntries=long(options.maxEntries))
 
