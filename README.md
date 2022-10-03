@@ -49,7 +49,7 @@ using the option ```-r``` (recursive) to copying entire folders. The option ```-
 # Copying files from local to remote:
 * From the local machine:
 
-```$ scp -oProxyJump=jamarino@gate.pd.infn.it /path/to/file jamarino@t2-ui-12:/destination/```
+```$ scp -oProxyJump=jamarino@gate.pd.infn.it /path/to/file jamarino@t2-ui-12:/lustre/cmswork/jamarino/CMSSW_10_6_20/src/NanoSkim/Skimmer/```
 
 or (untested):
 
