@@ -116,18 +116,16 @@ class Higgs(Module):
         self.out.branch("passedMETFilters", "I")
         self.out.branch("nCleanElectron", "I")
         self.out.branch("nCleanMuon", "I")
-        #self.out.branch("nCleanTau", "I")
+
         self.out.branch("nCleanPhoton", "I")
-        #self.out.branch("nCleanCentralJet", "I")
-        #self.out.branch("nCleanForwardJet", "I")
-        #self.out.branch("nCleanBTagJet", "I")
+
+
         self.out.branch("HT30", "F")
         self.out.branch("iPhoton", "I")
         self.out.branch("iMuon1", "I")
         self.out.branch("iMuon2", "I")
         #
 #        self.out.branch("isINC", "I")
-#        self.out.branch("isVBF", "I")
 #        self.out.branch("isHFL", "I")
 #        self.out.branch("isLEP", "I")
         #
@@ -192,43 +190,43 @@ class Higgs(Module):
         self.out.branch("maxMuonMetDPhi", "F")
         self.out.branch("photonMetDPhi", "F")
         self.out.branch("metPlusPhotonDPhi", "F")
-        #self.out.branch("vbfMjj", "F")
-        #self.out.branch("vbfDR", "F")
-        #self.out.branch("centrality", "F")
-        #self.out.branch("trCentr", "F")
-        #self.out.branch("cosThetaStar", "F")
-        #self.out.branch("cosTheta1", "F")
-        #self.out.branch("phi1", "F")
-        #self.out.branch("genCosThetaStar", "F")
-        #self.out.branch("genCosTheta1", "F")
-        #self.out.branch("genPhi1", "F")
+
+
+        self.out.branch("centrality", "F")
+        self.out.branch("trCentr", "F")
+        self.out.branch("cosThetaStar", "F")
+        self.out.branch("cosTheta1", "F")
+        self.out.branch("phi1", "F")
+        self.out.branch("genCosThetaStar", "F")
+        self.out.branch("genCosTheta1", "F")
+        self.out.branch("genPhi1", "F")
         self.out.branch("lumiWeight", "F")
         self.out.branch("lheWeight", "F")
         self.out.branch("stitchWeight", "F")
-        #self.out.branch("topWeight", "F")
-        #self.out.branch("qcdnloWeight", "F")
-        #self.out.branch("qcdnnloWeight", "F")
-        #self.out.branch("ewknloWeight", "F")
-        #self.out.branch("puWeight", "F")
-        #self.out.branch("puWeightUp", "F")
-        #self.out.branch("puWeightDown", "F")
+        self.out.branch("topWeight", "F")
+        self.out.branch("qcdnloWeight", "F")
+        self.out.branch("qcdnnloWeight", "F")
+        self.out.branch("ewknloWeight", "F")
+        self.out.branch("puWeight", "F")
+        self.out.branch("puWeightUp", "F")
+        self.out.branch("puWeightDown", "F")
         self.out.branch("triggerWeight", "F")
-        #self.out.branch("triggerWeightUp", "F")
-        #self.out.branch("triggerWeightDown", "F")
-        #self.out.branch("triggerMuonEGWeight", "F")
-        #self.out.branch("triggerMuonEGWeightUp", "F")
-        #self.out.branch("triggerMuonEGWeightDown", "F")
+        self.out.branch("triggerWeightUp", "F")
+        self.out.branch("triggerWeightDown", "F")
+        self.out.branch("triggerMuonEGWeight", "F")
+        self.out.branch("triggerMuonEGWeightUp", "F")
+        self.out.branch("triggerMuonEGWeightDown", "F")
         self.out.branch("triggerJPsiWeight", "F")
         self.out.branch("triggerJPsiWeightUp", "F")
         self.out.branch("triggerJPsiWeightDown", "F")
-        #self.out.branch("leptonWeight", "F")
-        #self.out.branch("leptonWeightUp", "F")
-        #self.out.branch("leptonWeightDown", "F")
-        #self.out.branch("photonWeight", "F")
-        #self.out.branch("photonWeightUp", "F")
-        #self.out.branch("photonWeightDown", "F")
-        #self.out.branch("eventMuonEGWeightLumi", "F")
-        #self.out.branch("eventJPsiWeightLumi", "F")
+        self.out.branch("leptonWeight", "F")
+        self.out.branch("leptonWeightUp", "F")
+        self.out.branch("leptonWeightDown", "F")
+        self.out.branch("photonWeight", "F")
+        self.out.branch("photonWeightUp", "F")
+        self.out.branch("photonWeightDown", "F")
+        self.out.branch("eventMuonEGWeightLumi", "F")
+        self.out.branch("eventJPsiWeightLumi", "F")
         self.out.branch("eventWeightLumi", "F")
         
         self.fileName = inputFile.GetName()
@@ -292,13 +290,13 @@ class Higgs(Module):
         #if self.isMC and self.isLO and self.verbose >= 0: print "+ Sample is LO, gen weight will be set to 1"
 #        self.puTool = PileupWeightTool(year = year) if self.isMC else None
 
-        #self.SingleMuonTriggers = ["HLT_IsoMu27"]
+        self.SingleMuonTriggers = ["HLT_IsoMu27"]
         self.SingleMuonPhotonTriggers = ["HLT_Mu17_Photon30_CaloIdL_L1ISO", "HLT_Mu17_Photon30_IsoCaloId", "HLT_Mu17_Photon30_CaloIdL"] # 27.13 in 2017
-        #self.SingleMuonNoFiltersPhotonTriggers = ["HLT_Mu38NoFiltersNoVtxDisplaced_Photon38_CaloIdL", "HLT_Mu38NoFiltersNoVtx_Photon38_CaloIdL", "HLT_Mu43NoFiltersNoVtx_Photon43_CaloIdL"]
-        #self.DoubleMuonTriggers = ["HLT_Mu17_Mu8", "HLT_Mu17_Mu8_DZ", "HLT_Mu17_TkMu8_DZ", "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass", "HLT_Mu37_TkMu27", ] #, "HLT_DoubleMu33NoFiltersNoVtxDisplaced"]
-        #self.DoubleMuonPhotonTriggers = ["HLT_DoubleMu20_7_Mass0to30_Photon23"]
-        #self.JPsiTriggers = ["HLT_Dimuon16_Jpsi", "HLT_Dimuon18_PsiPrime", "HLT_Dimuon18_PsiPrime_noCorrL1", "HLT_Dimuon25_Jpsi", "HLT_Dimuon25_Jpsi_noCorrL1", "HLT_Dimuon20_Jpsi", ]
-        #self.DisplacedTriggers = ["HLT_DoubleMu4_JpsiTrk_Displaced", "HLT_DoubleMu4_PsiPrimeTrk_Displaced"]
+        self.SingleMuonNoFiltersPhotonTriggers = ["HLT_Mu38NoFiltersNoVtxDisplaced_Photon38_CaloIdL", "HLT_Mu38NoFiltersNoVtx_Photon38_CaloIdL", "HLT_Mu43NoFiltersNoVtx_Photon43_CaloIdL"]
+        self.DoubleMuonTriggers = ["HLT_Mu17_Mu8", "HLT_Mu17_Mu8_DZ", "HLT_Mu17_TkMu8_DZ", "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass", "HLT_Mu37_TkMu27", ] #, "HLT_DoubleMu33NoFiltersNoVtxDisplaced"]
+        self.DoubleMuonPhotonTriggers = ["HLT_DoubleMu20_7_Mass0to30_Photon23"]
+        self.JPsiTriggers = ["HLT_Dimuon16_Jpsi", "HLT_Dimuon18_PsiPrime", "HLT_Dimuon18_PsiPrime_noCorrL1", "HLT_Dimuon25_Jpsi", "HLT_Dimuon25_Jpsi_noCorrL1", "HLT_Dimuon20_Jpsi", ]
+        self.DisplacedTriggers = ["HLT_DoubleMu4_JpsiTrk_Displaced", "HLT_DoubleMu4_PsiPrimeTrk_Displaced"]
         
         if self.isMC:
             self.muSFs  = None #MuonSFs(year = self.year)
@@ -307,11 +305,11 @@ class Higgs(Module):
         
         # trigger SF
         self.triggerSFdict = {
-        #    "SingleMuonPhoton" : {
-        #        2016 : 0.982,
-        #        2017 : 0.919,
-        #        2018 : 0.972,
-        #    },
+            "SingleMuonPhoton" : {
+                2016 : 0.982,
+                2017 : 0.919,
+                2018 : 0.972,
+            },
             "SingleMuonPhotonUp" : {
                 2016 : 0.982 + 0.059,
                 2017 : 0.919 + 0.061,
@@ -322,21 +320,21 @@ class Higgs(Module):
                 2017 : 0.919 - 0.061,
                 2018 : 0.972 - 0.035,
             },
-        #    "JPsi" : {
-        #        2016 : 1.004,
-        #        2017 : 1.021,
-        #        2018 : 1.006,
-        #    },
-        #    "JPsiUp" : {
-        #        2016 : 1.004 + 0.032,
-        #        2017 : 1.021 + 0.010,
-        #        2018 : 1.006 + 0.008,
-        #    },
-        #    "JPsiDown" : {
-        #        2016 : 1.004 - 0.032,
-        #        2017 : 1.021 - 0.010,
-        #        2018 : 1.006 - 0.008,
-        #    },
+            "JPsi" : {
+                2016 : 1.004,
+                2017 : 1.021,
+                2018 : 1.006,
+            },
+            "JPsiUp" : {
+                2016 : 1.004 + 0.032,
+                2017 : 1.021 + 0.010,
+                2018 : 1.006 + 0.008,
+            },
+            "JPsiDown" : {
+                2016 : 1.004 - 0.032,
+                2017 : 1.021 - 0.010,
+                2018 : 1.006 - 0.008,
+            },
         }
             
         # muon SF tools
@@ -410,7 +408,7 @@ class Higgs(Module):
         puWeight, puWeightUp, puWeightDown, leptonWeight, leptonWeightUp, leptonWeightDown, photonWeight, photonWeightUp, photonWeightDown = 1., 1., 1., 1., 1., 1., 1., 1., 1.
         triggerWeight, triggerWeightUp, triggerWeightDown, triggerMuonEGWeight, triggerMuonEGWeightUp, triggerMuonEGWeightDown, triggerJPsiWeight, triggerJPsiWeightUp, triggerJPsiWeightDown = 1., 1., 1., 1., 1., 1., 1., 1., 1.
         isSingleMuonTrigger, isSingleMuonPhotonTrigger, isSingleMuonNoFiltersPhotonTrigger, isDoubleMuonTrigger, isDoubleMuonPhotonTrigger, isJPsiTrigger, isDisplacedTrigger = False, False, False, False, False, False, False
-        nCleanElectron, nCleanMuon, nCleanTau, nCleanPhoton, nCleanCentralJet, nCleanForwardJet, nCleanBTagJet, HT30 = 0, 0, 0, 0, 0, 0, 0, 0
+        nCleanElectron, nCleanMuon, nCleanPhoton, HT30 = 0, 0, 0, 0
         cosThetaStar, cosTheta1, phi1 = -2., -2., -4.
         genCosThetaStar, genCosTheta1, genPhi1 = -2., -2., -4.
         centrality, trCentr = -1., -1.
@@ -742,13 +740,7 @@ class Higgs(Module):
                 tLV.SetPtEtaPhiM(event.Electron_pt[i], event.Electron_eta[i], event.Electron_phi[i], event.Electron_mass[i])
                 if muon1.DeltaR(tLV) > 0.4 and muon2.DeltaR(tLV) > 0.4 and photon.DeltaR(tLV) > 0.3:
                     nCleanElectron += 1
-        
-        # Taus
-        for i in range(event.nTau):
-            if event.Tau_pt[i] > 20. and abs(event.Tau_eta[i]) < 2.5 and event.Tau_idDeepTau2017v2p1VSe[i] >= 16 and event.Tau_idDeepTau2017v2p1VSmu[i] >= 8 and event.Tau_idDeepTau2017v2p1VSjet[i] >= 16 and event.Tau_rawIsodR03[i] < 0.15:
-                tLV.SetPtEtaPhiM(event.Tau_pt[i], event.Tau_eta[i], event.Tau_phi[i], event.Tau_mass[i])
-                if muon1.DeltaR(tLV) > 0.4 and muon2.DeltaR(tLV) > 0.4 and photon.DeltaR(tLV) > 0.3:
-                    nCleanTau += 1
+
         
         # Photons
         for i in range(event.nPhoton):
@@ -757,40 +749,8 @@ class Higgs(Module):
                 if muon1.DeltaR(tLV) > 0.4 and muon2.DeltaR(tLV) > 0.4 and photon.DeltaR(tLV) > 0.3:
                     nCleanPhoton += 1
         
-        # Jets and Event variables
-        idxJets = []
-        nJet = event.nJet if hasattr(event, "nJet") else 0 # should not happen, but it does
-        for i in range(nJet):
-            if event.Jet_jetId[i] >= 6 and event.Jet_pt[i] > 30. and abs(event.Jet_eta[i]) < 5.:
-                tLV.SetPtEtaPhiM(event.Jet_pt[i], event.Jet_eta[i], event.Jet_phi[i], event.Jet_mass[i])
-                if muon1.DeltaR(tLV) > 0.4 and muon2.DeltaR(tLV) > 0.4 and photon.DeltaR(tLV) > 0.4:
-                    idxJets.append(i)
-                    if abs(event.Jet_eta[i]) < 2.5:
-                        HT30 += event.Jet_pt[i]
-                        nCleanCentralJet += 1
-                        if event.Jet_btagDeepB[i] >= self.btagMedium: nCleanBTagJet += 1
-                    else:
-                        nCleanForwardJet += 1
-        
-        # max invariant mass of all jets
-        vbfmjj, vbfdR = -1., -1.
-        for i in range(len(idxJets)):
-            for j in range(len(idxJets)):
-                if i != j:
-                    tJ1.SetPtEtaPhiM(event.Jet_pt[i], event.Jet_eta[i], event.Jet_phi[i], event.Jet_mass[i])
-                    tJ2.SetPtEtaPhiM(event.Jet_pt[j], event.Jet_eta[j], event.Jet_phi[j], event.Jet_mass[j])
-                    tmjj = (tJ1 + tJ2).M()
-                    if tmjj > vbfmjj:
-                        vbfmjj = tmjj
-                        vbfdR = tJ1.DeltaR(tJ2)
         
         
-#        # Categorization
-#        isINC, isVBF, isHFL, isLEP = False, False, False, False
-#        if nCleanMuon + nCleanElectron >= 1: isLEP = True
-#        elif nCleanBTagJet >= 1: isHFL = True
-#        elif vbfmjj > 350.: isVBF = True
-#        else: isINC = True
         
         
         
@@ -883,18 +843,14 @@ class Higgs(Module):
         self.out.fillBranch("passedMETFilters", passedMETFilters)
         self.out.fillBranch("nCleanElectron", nCleanElectron)
         self.out.fillBranch("nCleanMuon", nCleanMuon)
-        self.out.fillBranch("nCleanTau", nCleanTau)
         self.out.fillBranch("nCleanPhoton", nCleanPhoton)
-        self.out.fillBranch("nCleanCentralJet", nCleanCentralJet)
-        self.out.fillBranch("nCleanForwardJet", nCleanForwardJet)
-        self.out.fillBranch("nCleanBTagJet", nCleanBTagJet)
         self.out.fillBranch("HT30", HT30)
         self.out.fillBranch("iPhoton", p0)
         self.out.fillBranch("iMuon1", m1)
         self.out.fillBranch("iMuon2", m2)
         #
 #        self.out.fillBranch("isINC", isINC)
-#        self.out.fillBranch("isVBF", isVBF)
+
 #        self.out.fillBranch("isHFL", isHFL)
 #        self.out.fillBranch("isLEP", isLEP)
         #
@@ -959,8 +915,8 @@ class Higgs(Module):
         self.out.fillBranch("maxMuonMetDPhi", maxMuonMetDPhi)
         self.out.fillBranch("photonMetDPhi", photonMetDPhi)
         self.out.fillBranch("metPlusPhotonDPhi", metPlusPhotonDPhi)
-        self.out.fillBranch("vbfMjj", vbfmjj)
-        self.out.fillBranch("vbfDR", vbfdR)
+
+
         self.out.fillBranch("centrality", centrality)
         self.out.fillBranch("trCentr", trCentr)
         self.out.fillBranch("cosThetaStar", cosThetaStar)
