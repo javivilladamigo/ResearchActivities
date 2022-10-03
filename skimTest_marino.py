@@ -40,7 +40,7 @@ if len(options.list) > 0:
 
 
 
-fileList = ["root://cms-xrd-global.cern.ch//store/mc/RunIISummer20UL18NanoAODv9/GluGluToH_HToJPsiG_JPsiToMuMu_TuneCP5_13TeV-madgraph-pythia8/NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v2/70000/6E527BF2-E7F7-DF4E-B1C2-5582052AD7E6.root"]
+fileList = ["root://cms-xrd-global.cern.ch//store/mc/RunIISummer20UL18NanoAODv9/GluGluToH_HToJPsiG_JPsiToMuMu_TuneCP5_13TeV-madgraph-pythia8/NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v2/130000/9D1DB63A-4D8D-4947-B1F7-BABEB6553F4C.root"]
 
 
 
