@@ -8,26 +8,18 @@ from PhysicsTools.NanoAODTools.postprocessing.framework.datamodel import Collect
 from PhysicsTools.NanoAODTools.postprocessing.framework.eventloop import Module
 from PhysicsTools.NanoAODTools.postprocessing.tools import *
 
-#from CorrectionTools.PileupWeightTool import *
-#from CorrectionTools.BTaggingTool import BTagWeightTool, BTagWPs
-#from CorrectionTools.MuonSFs import *
-#from CorrectionTools.ElectronSFs import *
-#from CorrectionTools.RecoilCorrectionTool import getTTptWeight, getTTPt
-#from CorrectionTools.DYCorrection import *
-#from PileupWeightTool import PileupWeightTool
-#from PhysicsTools.NanoAODTools.postprocessing.modules.common.puWeightProducer import puWeightProducer
+
 from CorrectionTools.PileupWeightTool import *
 from CorrectionTools.MuonSFs import *
 from CorrectionTools.PhotonSFs import *
-#from metadataSF import *
+
 from global_paths import *
 
 from ROOT import TLorentzVector, TVector3, TVector2
 from utils import EV, XS, getNameFromFile
 
 
-
-class Higgs(Module):
+class Higgs_marino(Module):
     def __init__(self):
         self.writeHistFile=True
         
@@ -35,6 +27,9 @@ class Higgs(Module):
 
     def beginJob(self,histFile=None,histDirName=None):
         Module.beginJob(self,histFile,histDirName)
+
+        print("\n Higgs_marino working \n")
+
         self.event = 0
         self.hists = {}
         self.hists["Nevents"] = ROOT.TH1F("Nevents", "Nevents", 1, 0, 1)
@@ -54,12 +49,12 @@ class Higgs(Module):
         self.hists["genMuon2_pt"] = ROOT.TH1F("genMuon2_pt", ";generator #mu^{+} p_{T} (GeV)", 100, 0., 100.)
         self.hists["genMuon2_eta"] = ROOT.TH1F("genMuon2_eta", ";generator #mu^{+} #eta", 100, -5., 5.)
         
-        self.hists["genCosThetaStar"] = ROOT.TH1F("genCosThetaStar", ";cos #theta^{*}", 100, -1., 1.)
-        self.hists["genCosTheta1"] = ROOT.TH1F("genCosTheta1", ";cos #theta_{1}", 100, -1., 1.)
-        self.hists["genPhi1"] = ROOT.TH1F("genPhi1", ";#Phi_{1}", 100, -3.1415, 3.1415)
-        self.hists["genCosThetaStarZtoMM"] = ROOT.TH1F("genCosThetaStarZtoMM", ";cos #theta^{*}", 100, -1., 1.)
+
+
+
+
         
-        self.hists["central"] = ROOT.TH1F("central", "", 125, 76, 200)
+
         self.hists["phScaleUp"] = ROOT.TH1F("phScaleUp", "", 125, 76, 200)
         self.hists["phScaleDown"] = ROOT.TH1F("phScaleDown", "", 125, 76, 200)
         self.hists["phResUp"] = ROOT.TH1F("phResUp", "", 125, 76, 200)
@@ -112,9 +107,10 @@ class Higgs(Module):
         self.out.branch("isDoubleMuonTrigger", "I")
         self.out.branch("isDoubleMuonPhotonTrigger", "I")
         self.out.branch("isJPsiTrigger", "I")
-        self.out.branch("isDisplacedTrigger", "I")
-        self.out.branch("passedMETFilters", "I")
-        self.out.branch("nCleanElectron", "I")
+
+
+
+
         self.out.branch("nCleanMuon", "I")
 
         self.out.branch("nCleanPhoton", "I")
@@ -186,20 +182,10 @@ class Higgs(Module):
         self.out.branch("H_mass_phResDown", "F")
         self.out.branch("H_mass_noCorr", "F")
         
-        self.out.branch("minMuonMetDPhi", "F")
-        self.out.branch("maxMuonMetDPhi", "F")
-        self.out.branch("photonMetDPhi", "F")
-        self.out.branch("metPlusPhotonDPhi", "F")
 
 
-        self.out.branch("centrality", "F")
-        self.out.branch("trCentr", "F")
-        self.out.branch("cosThetaStar", "F")
-        self.out.branch("cosTheta1", "F")
-        self.out.branch("phi1", "F")
-        self.out.branch("genCosThetaStar", "F")
-        self.out.branch("genCosTheta1", "F")
-        self.out.branch("genPhi1", "F")
+
+
         self.out.branch("lumiWeight", "F")
         self.out.branch("lheWeight", "F")
         self.out.branch("stitchWeight", "F")
@@ -242,6 +228,7 @@ class Higgs(Module):
         self.thPhoton = 10.
         self.thMatching = 0.01
         self.muonCriteria = "DR"
+
         
         # b-tagging working points for DeepCSV
         # https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation2016Legacy
@@ -275,6 +262,7 @@ class Higgs(Module):
         if not self.sampleName in EV:
             if self.verbose >= 0: print "- No number of events available for sample ", self.sampleName, ", aborting"
             sys.exit()
+
         self.xs = XS[self.sampleName]
         self.nevents = EV[self.sampleName]
         self.xsWeight = self.xs / self.nevents
@@ -296,11 +284,11 @@ class Higgs(Module):
         self.DoubleMuonTriggers = ["HLT_Mu17_Mu8", "HLT_Mu17_Mu8_DZ", "HLT_Mu17_TkMu8_DZ", "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass", "HLT_Mu37_TkMu27", ] #, "HLT_DoubleMu33NoFiltersNoVtxDisplaced"]
         self.DoubleMuonPhotonTriggers = ["HLT_DoubleMu20_7_Mass0to30_Photon23"]
         self.JPsiTriggers = ["HLT_Dimuon16_Jpsi", "HLT_Dimuon18_PsiPrime", "HLT_Dimuon18_PsiPrime_noCorrL1", "HLT_Dimuon25_Jpsi", "HLT_Dimuon25_Jpsi_noCorrL1", "HLT_Dimuon20_Jpsi", ]
-        self.DisplacedTriggers = ["HLT_DoubleMu4_JpsiTrk_Displaced", "HLT_DoubleMu4_PsiPrimeTrk_Displaced"]
+
         
         if self.isMC:
             self.muSFs  = None #MuonSFs(year = self.year)
-            self.elSFs  = None #ElectronSFs(year = self.year)
+
             self.puTool = PileupWeightTool(year = self.year)
         
         # trigger SF
@@ -407,11 +395,8 @@ class Higgs(Module):
         eventWeightLumi, eventMuonEGWeightLumi, eventJPsiWeightLumi, lheWeight, stitchWeight, qcdnloWeight, qcdnnloWeight, ewknloWeight, topWeight = 1., 1., 1., 1., 1., 1., 1., 1., 1.
         puWeight, puWeightUp, puWeightDown, leptonWeight, leptonWeightUp, leptonWeightDown, photonWeight, photonWeightUp, photonWeightDown = 1., 1., 1., 1., 1., 1., 1., 1., 1.
         triggerWeight, triggerWeightUp, triggerWeightDown, triggerMuonEGWeight, triggerMuonEGWeightUp, triggerMuonEGWeightDown, triggerJPsiWeight, triggerJPsiWeightUp, triggerJPsiWeightDown = 1., 1., 1., 1., 1., 1., 1., 1., 1.
-        isSingleMuonTrigger, isSingleMuonPhotonTrigger, isSingleMuonNoFiltersPhotonTrigger, isDoubleMuonTrigger, isDoubleMuonPhotonTrigger, isJPsiTrigger, isDisplacedTrigger = False, False, False, False, False, False, False
-        nCleanElectron, nCleanMuon, nCleanPhoton, HT30 = 0, 0, 0, 0
-        cosThetaStar, cosTheta1, phi1 = -2., -2., -4.
-        genCosThetaStar, genCosTheta1, genPhi1 = -2., -2., -4.
-        centrality, trCentr = -1., -1.
+        isSingleMuonTrigger, isSingleMuonPhotonTrigger, isSingleMuonNoFiltersPhotonTrigger, isDoubleMuonTrigger, isDoubleMuonPhotonTrigger, isJPsiTrigger = False, False, False, False, False, False
+        nCleanMuon, nCleanPhoton, HT30 = 0, 0, 0
 
         for t in self.SingleMuonTriggers:
             if hasattr(event, t) and getattr(event, t): isSingleMuonTrigger = True
@@ -425,8 +410,7 @@ class Higgs(Module):
             if hasattr(event, t) and getattr(event, t): isDoubleMuonPhotonTrigger = True
         for t in self.JPsiTriggers:
             if hasattr(event, t) and getattr(event, t): isJPsiTrigger = True
-        for t in self.DisplacedTriggers:
-            if hasattr(event, t) and getattr(event, t): isDisplacedTrigger = True
+
         
         lheWeight = 1.
         
@@ -475,7 +459,7 @@ class Higgs(Module):
                 genJPsi = genMuon1 + genMuon2
                 genH = genJPsi + genPhoton
                 
-                genCosThetaStar, genCosTheta1, genPhi1 = self.returnCosThetaStar(genH, genJPsi), self.returnCosTheta1(genJPsi, genMuon1, genMuon2, genPhoton), self.returnPhi1(genH, genMuon1, genMuon2)
+
                 
                 self.hists["genH_pt"].Fill(genH.Pt(), lheWeight)
                 self.hists["genH_eta"].Fill(genH.Eta(), lheWeight)
@@ -491,16 +475,8 @@ class Higgs(Module):
                 self.hists["genMuon1_eta"].Fill(genMuon1.Eta(), lheWeight)
                 self.hists["genMuon2_pt"].Fill(min(genMuon1.Pt(), genMuon2.Pt()), lheWeight)
                 self.hists["genMuon2_eta"].Fill(genMuon2.Eta(), lheWeight)
-                self.hists["genCosThetaStar"].Fill(genCosThetaStar, lheWeight)
-                self.hists["genCosTheta1"].Fill(genCosTheta1, lheWeight)
-                self.hists["genPhi1"].Fill(genPhi1, lheWeight)
-                self.hists["genCosThetaStarZtoMM"].Fill(self.returnCosThetaStar(genH, genMuon1), lheWeight)
-                
-                # Reweight
-                #topWeight = 3./4. * (1. + genCosTheta1**2) # Transverse polarization (H, Z)
-                #if 'ZToJPsiG' in self.sampleName:
-                #    stitchWeight = 3./2. * (1. - genCosTheta1**2) # Longitudinal polarization (Z)
-                
+
+
                 # Acceptance
                 if abs(genPhoton.Eta()) < 2.5:
                     self.hists["Acceptance"].Fill(1, lheWeight)
@@ -514,14 +490,7 @@ class Higgs(Module):
                                 isGenAcceptance = True
                 self.hists["Matching"].Fill(1, lheWeight)
                 if isGenAcceptance: self.hists["Matching"].Fill(2, lheWeight)
-#            else:
-#                print "-"*60
-#                print genHIdx, genJPsiIdx, genPhotonIdx, genMuon1Idx, genMuon2Idx
-#                for i in range(event.nGenPart):
-#                    print i, "\t", event.GenPart_pdgId[i], "\t", event.GenPart_status[i], "\t", (event.GenPart_pdgId[event.GenPart_genPartIdxMother[i]] if event.GenPart_genPartIdxMother[i] >= 0 else "-")
-        #for i in range(event.nMuon):
-        #    print i, event.Muon_pt[i], event.Muon_corrected_pt[i], event.Muon_correctedUp_pt[i], event.Muon_correctedDown_pt[i]
-        
+
         # Muons
         m1, m2 = -1, -1
         if self.muonCriteria == "PT":
@@ -576,8 +545,6 @@ class Higgs(Module):
         muon1ScaleDown.SetPtEtaPhiM(_mu1ptDown, event.Muon_eta[m1], event.Muon_phi[m1], event.Muon_mass[m1])
         muon2ScaleUp.SetPtEtaPhiM(_mu2ptUp, event.Muon_eta[m2], event.Muon_phi[m2], event.Muon_mass[m2])
         muon2ScaleDown.SetPtEtaPhiM(_mu2ptDown, event.Muon_eta[m2], event.Muon_phi[m2], event.Muon_mass[m2])
-        muonP, muonM = (muon1.Clone(), muon2.Clone()) if event.Muon_charge[m1] > event.Muon_charge[m2] else (muon2.Clone(), muon1.Clone())
-        muon1v2, muon2v2 = TVector2(muon1.Px(), muon1.Py()), TVector2(muon2.Px(), muon2.Py())
         
         # Gen matching
         if self.isMC and self.isSignal and isGenMatched:
@@ -619,7 +586,7 @@ class Higgs(Module):
         photonScaleDown.SetPtEtaPhiM(event.Photon_pt[p0] + _phScaleDown, event.Photon_eta[p0], event.Photon_phi[p0], event.Photon_mass[p0]) #event.Photon_dEscaleDown[p0]
         photonResUp.SetPtEtaPhiM(event.Photon_pt[p0] + _phResUp, event.Photon_eta[p0], event.Photon_phi[p0], event.Photon_mass[p0])
         photonResDown.SetPtEtaPhiM(event.Photon_pt[p0] + _phResDown, event.Photon_eta[p0], event.Photon_phi[p0], event.Photon_mass[p0])
-        photonv2 = TVector2(photon.Px(), photon.Py())
+
         
         # Gen matching
         if self.isMC and self.isSignal and isGenMatched:
@@ -630,10 +597,6 @@ class Higgs(Module):
             genEventMatching = genMuonsMatching and genPhotonMatching
             if genEventMatching: self.hists["Matching"].Fill(7, lheWeight)
         
-        # MET
-        met, metPlusPhoton = TVector2(), TVector2()
-        met.SetMagPhi(event.MET_pt, event.MET_phi)
-        metPlusPhoton.Set(met.Px() + photon.Px(), met.Py() + photon.Py())
         
         h = jpsi + photon
         
@@ -678,54 +641,11 @@ class Higgs(Module):
         minMuonPfSubIso = min(Muon1PfSubIso, Muon2PfSubIso)
         maxMuonPfSubIso = max(Muon1PfSubIso, Muon2PfSubIso)
         
-        minMuonMetDPhi = min(abs(muon1v2.DeltaPhi(met)), abs(muon2v2.DeltaPhi(met)))
-        maxMuonMetDPhi = max(abs(muon1v2.DeltaPhi(met)), abs(muon2v2.DeltaPhi(met)))
-        photonMetDPhi = abs(photonv2.DeltaPhi(met))
-        metPlusPhotonDPhi = abs(met.DeltaPhi(metPlusPhoton))
-        
-        centrality = self.returnCentrality(h, muonP, muonM, photon)
-        trCentr = min(math.log(1./(1.-centrality))/10., 1.)
-        
-        cosThetaStar = self.returnCosThetaStar(h, jpsi)
-        cosTheta1 = self.returnCosTheta1(jpsi, muonP, muonM, photon)
-        phi1 = self.returnPhi1(h, muonP, muonM)
-
-        # Weights
-#        if self.isMC:
-#            triggerWeight = self.muSFs.getTriggerSF(event.Muon_pt[m1], event.Muon_eta[m1])
-#            IdSF1 = self.muSFs.getIdSF(event.Muon_pt[0], event.Muon_eta[0], 2)
-#            IsoSF1 = self.muSFs.getIsoSF(event.Muon_pt[0], event.Muon_eta[0])
-#            IdSF2 = self.muSFs.getIdSF(event.Muon_pt[1], event.Muon_eta[1], 2)
-#            IsoSF2 = self.muSFs.getIsoSF(event.Muon_pt[1], event.Muon_eta[1])
-#            IdIsoSF3 = self.elSFs.getIdIsoSF(event.Electron_pt[0], event.Electron_eta[0])
-#            leptonWeight = IdSF1 * IsoSF1 * IdSF2 * IsoSF2 * IdIsoSF3
-        
-        passedMETFilters = True
-        filters = ["Flag_goodVertices", "Flag_globalSuperTightHalo2016Filter", "Flag_BadPFMuonFilter", "Flag_EcalDeadCellTriggerPrimitiveFilter", "Flag_HBHENoiseFilter", "Flag_HBHENoiseIsoFilter", "Flag_ecalBadCalibFilter", "Flag_ecalBadCalibFilterV2"]
-        if not self.isMC: filters += ["Flag_eeBadScFilter"]
-        for f in filters:
-            if hasattr(event, f) and getattr(event, f) == False: passedMETFilters = False
-#        try:
-##            if event.Flag_goodVertices: print "Flag_goodVertices"
-##            if event.Flag_globalSuperTightHalo2016Filter: print "Flag_globalSuperTightHalo2016Filter"
-##            if event.Flag_BadPFMuonFilter: print "Flag_BadPFMuonFilter"
-##            if event.Flag_EcalDeadCellTriggerPrimitiveFilter: print "Flag_EcalDeadCellTriggerPrimitiveFilter"
-##            if event.Flag_HBHENoiseFilter: print "Flag_HBHENoiseFilter"
-##            if event.Flag_HBHENoiseIsoFilter: print "Flag_HBHENoiseIsoFilter"
-###            if (self.isMC or event.Flag_eeBadScFilter): print "Flag_eeBadScFilter"
-##            if event.Flag_ecalBadCalibFilter: print "Flag_ecalBadCalibFilterV2"
-#            if event.Flag_goodVertices and event.Flag_globalSuperTightHalo2016Filter and event.Flag_BadPFMuonFilter and event.Flag_EcalDeadCellTriggerPrimitiveFilter and event.Flag_HBHENoiseFilter and event.Flag_HBHENoiseIsoFilter: # and event.Flag_ecalBadCalibFilter: #and (self.isMC or event.Flag_eeBadScFilter): FIXME
-#                passedMETFilters = True
-##            if not self.isMC:
-##                if not event.Flag_eeBadScFilter:
-##                    passedMETFilters = False
-#        except:
-#            passedMETFilters = False
         
         
         
         ### Event variables ###
-        tLV, tJ1, tJ2 = TLorentzVector(), TLorentzVector(), TLorentzVector()
+        tLV = TLorentzVector()
         
         # Muons
         for i in range(event.nMuon):
@@ -733,15 +653,6 @@ class Higgs(Module):
                 tLV.SetPtEtaPhiM(event.Muon_pt[i], event.Muon_eta[i], event.Muon_phi[i], event.Muon_mass[i])
                 if muon1.DeltaR(tLV) > 0.4 and muon2.DeltaR(tLV) > 0.4 and photon.DeltaR(tLV) > 0.3:
                     nCleanMuon += 1
-        
-        # Electrons
-        for i in range(event.nElectron):
-            if event.Electron_pt[i] > 10. and abs(event.Electron_eta[i]) < 2.5 and event.Electron_cutBased[i] >= 2:
-                tLV.SetPtEtaPhiM(event.Electron_pt[i], event.Electron_eta[i], event.Electron_phi[i], event.Electron_mass[i])
-                if muon1.DeltaR(tLV) > 0.4 and muon2.DeltaR(tLV) > 0.4 and photon.DeltaR(tLV) > 0.3:
-                    nCleanElectron += 1
-
-        
         # Photons
         for i in range(event.nPhoton):
             if i != p0 and event.Photon_pt[i] > 15. and abs(event.Photon_eta[i]) < 2.5 and event.Photon_pfRelIso03_all[i] < 0.15 and event.Photon_mvaID_WP90[i]:
@@ -751,29 +662,16 @@ class Higgs(Module):
         
         
         
-        
-        
+    
         
         if self.isMC:
             # muon Id SF and errors
-            # Muon1_mediumId_SF          = self.muSFdict["loose"][self.year].getIdSF     (event.Muon_pt[m1], event.Muon_eta[m1])
-            # Muon1_mediumId_SFError     = self.muSFdict["loose"][self.year].getIdSFerror(event.Muon_pt[m1], event.Muon_eta[m1])
-            # Muon2_mediumId_SF          = self.muSFdict["loose"][self.year].getIdSF     (event.Muon_pt[m2], event.Muon_eta[m2])
-            # Muon2_mediumId_SFError     = self.muSFdict["loose"][self.year].getIdSFerror(event.Muon_pt[m2], event.Muon_eta[m2])
-            # Muon1_tightId_SF           = self.muSFdict["tight"][self.year].getIdSF     (event.Muon_pt[m1], event.Muon_eta[m1])
-            # Muon1_tightId_SFError      = self.muSFdict["tight"][self.year].getIdSFerror(event.Muon_pt[m1], event.Muon_eta[m1])
-            # Muon2_tightId_SF           = self.muSFdict["tight"][self.year].getIdSF     (event.Muon_pt[m2], event.Muon_eta[m2])
-            # Muon2_tightId_SFError      = self.muSFdict["tight"][self.year].getIdSFerror(event.Muon_pt[m2], event.Muon_eta[m2])
             Muon1_mediumPromptId_SF      = self.muSFdict["prompt"][self.year].getIdSF     (event.Muon_pt[m1], event.Muon_eta[m1])
             Muon1_mediumPromptId_SFError = self.muSFdict["prompt"][self.year].getIdSFerror(event.Muon_pt[m1], event.Muon_eta[m1])
             Muon2_mediumPromptId_SF      = self.muSFdict["prompt"][self.year].getIdSF     (event.Muon_pt[m2], event.Muon_eta[m2])
             Muon2_mediumPromptId_SFError = self.muSFdict["prompt"][self.year].getIdSFerror(event.Muon_pt[m2], event.Muon_eta[m2])
 
             # muon Iso SF and errors
-            # Muon1_looseIso_SF          = self.muSFdict["loose"][self.year].getIsoSF     (event.Muon_pt[m1], event.Muon_eta[m1])
-            # Muon1_looseIso_SFError     = self.muSFdict["loose"][self.year].getIsoSFerror(event.Muon_pt[m1], event.Muon_eta[m1])
-            # Muon2_looseIso_SF          = self.muSFdict["loose"][self.year].getIsoSF     (event.Muon_pt[m2], event.Muon_eta[m2])
-            # Muon2_looseIso_SFError     = self.muSFdict["loose"][self.year].getIsoSFerror(event.Muon_pt[m2], event.Muon_eta[m2])
             Muon1_tightIso_SF          = self.muSFdict["prompt"][self.year].getIsoSF     (event.Muon_pt[m1], event.Muon_eta[m1])
             Muon1_tightIso_SFError     = self.muSFdict["prompt"][self.year].getIsoSFerror(event.Muon_pt[m1], event.Muon_eta[m1])
             Muon2_tightIso_SF          = self.muSFdict["prompt"][self.year].getIsoSF     (event.Muon_pt[m2], event.Muon_eta[m2])
@@ -782,8 +680,6 @@ class Higgs(Module):
             # photon Id+Iso SF and errors
             Photon1_mvaID_WP80_SF      = self.phoSFdict["MVA80"][self.year].getIdIsoSF     (event.Photon_pt[p0], event.Photon_eta[p0])
             Photon1_mvaID_WP80_SFError = self.phoSFdict["MVA80"][self.year].getIdIsoSFerror(event.Photon_pt[p0], event.Photon_eta[p0])
-            Photon1_mvaID_WP90_SF      = self.phoSFdict["MVA90"][self.year].getIdIsoSF     (event.Photon_pt[p0], event.Photon_eta[p0])
-            Photon1_mvaID_WP90_SFError = self.phoSFdict["MVA90"][self.year].getIdIsoSFerror(event.Photon_pt[p0], event.Photon_eta[p0])
 
             # pileup SF
             puWeight            = self.puWeightSFdict["central"][self.year].getWeight(event.Pileup_nTrueInt)
@@ -840,8 +736,8 @@ class Higgs(Module):
         self.out.fillBranch("isDoubleMuonTrigger", isDoubleMuonTrigger)
         self.out.fillBranch("isDoubleMuonPhotonTrigger", isDoubleMuonPhotonTrigger)
         self.out.fillBranch("isJPsiTrigger", isJPsiTrigger)
-        self.out.fillBranch("passedMETFilters", passedMETFilters)
-        self.out.fillBranch("nCleanElectron", nCleanElectron)
+
+
         self.out.fillBranch("nCleanMuon", nCleanMuon)
         self.out.fillBranch("nCleanPhoton", nCleanPhoton)
         self.out.fillBranch("HT30", HT30)
@@ -911,22 +807,9 @@ class Higgs(Module):
         self.out.fillBranch("H_mass_phResDown", h_phResDown.M())
         self.out.fillBranch("H_mass_noCorr", h_noCorr.M())
         #
-        self.out.fillBranch("minMuonMetDPhi", minMuonMetDPhi)
-        self.out.fillBranch("maxMuonMetDPhi", maxMuonMetDPhi)
-        self.out.fillBranch("photonMetDPhi", photonMetDPhi)
-        self.out.fillBranch("metPlusPhotonDPhi", metPlusPhotonDPhi)
-
-
-        self.out.fillBranch("centrality", centrality)
-        self.out.fillBranch("trCentr", trCentr)
-        self.out.fillBranch("cosThetaStar", cosThetaStar)
-        self.out.fillBranch("cosTheta1", cosTheta1)
-        self.out.fillBranch("phi1", phi1)
-        self.out.fillBranch("genCosThetaStar", genCosThetaStar)
-        self.out.fillBranch("genCosTheta1", genCosTheta1)
-        self.out.fillBranch("genPhi1", genPhi1)
         self.out.fillBranch("lumiWeight", self.lumiWeight)
         self.out.fillBranch("lheWeight", lheWeight)
+        
         self.out.fillBranch("stitchWeight", stitchWeight)
         self.out.fillBranch("topWeight", topWeight)
         self.out.fillBranch("qcdnloWeight", qcdnloWeight)
@@ -958,7 +841,7 @@ class Higgs(Module):
         self.N += 1
         
         # Uncertainties
-        self.hists["central"].Fill(h.M(), 1.)
+
         self.hists["phScaleUp"].Fill(h_phScaleUp.M(), 1.)
         self.hists["phScaleDown"].Fill(h_phScaleDown.M(), 1.)
         self.hists["phResUp"].Fill(h_phResUp.M(), 1.)
@@ -993,60 +876,3 @@ class Higgs(Module):
                                         self.hists["Cutflow"].Fill(12, lheWeight)
         
         return True
-
-
-
-
-
-    def returnCentrality(self, theH, theL1, theL2, thePhoton):
-        h, l1, l2, g = TLorentzVector(theH), TLorentzVector(theL1), TLorentzVector(theL2), TLorentzVector(thePhoton)
-        # Boost objects to the H rest frame
-        l1.Boost( -h.BoostVector() )
-        l2.Boost( -h.BoostVector() )
-        g.Boost( -h.BoostVector() )
-        value = (l1.Pt() + l2.Pt() + g.Pt())/(l1.Energy() + l2.Energy() + g.Energy())
-        if value != value or math.isinf(value): return -1.
-        return value
-    
-    def returnCosThetaStar(self, theH, theJPsi):
-        h, j = TLorentzVector(theH), TLorentzVector(theJPsi)
-        # Boost the Z to the A rest frame
-        j.Boost( -h.BoostVector() )
-        value = j.CosTheta()
-        if value != value or math.isinf(value): return -2.
-        return value
-
-    def returnCosTheta1(self, theJPsi, theL1, theL2, thePhoton):
-        j, l1, l2, g = TLorentzVector(theJPsi), TLorentzVector(theL1), TLorentzVector(theL2), TLorentzVector(thePhoton)
-        # Boost objects to the JPsi rest frame
-        l1.Boost( -j.BoostVector() )
-        l2.Boost( -j.BoostVector() )
-        g.Boost( -j.BoostVector() )
-        # cos theta = Gamma dot L1 / (|Gamma|*|L1|)
-        value = g.Vect().Dot( l1.Vect() ) / ( (g.Vect().Mag())*(l1.Vect().Mag()) ) if g.Vect().Mag() > 0. and l1.Vect().Mag() > 0. else -2
-        if value != value or math.isinf(value): return -2.
-        return value
-
-    def returnPhi1(self, theH, theL1, theL2):
-        h, l1, l2 = TLorentzVector(theH), TLorentzVector(theL1), TLorentzVector(theL2)
-        beamAxis = TVector3(0., 0., 1.)
-        # Boost objects to the A rest frame
-        l1.Boost( -h.BoostVector() )
-        l2.Boost( -h.BoostVector() )
-        # Reconstruct JPsi in H rest frame
-        j = l1 + l2
-        # Build unit vectors orthogonal to the decay planes
-        Zplane = TVector3(l1.Vect().Cross( l2.Vect() )) # L1 x L2
-        Bplane = TVector3(beamAxis.Cross( j.Vect() )) # Beam x JPsi, beam/JPsi plane
-        if Zplane.Mag() == 0. or Bplane.Mag() == 0.: return -4.
-        Zplane.SetMag(1.)
-        Bplane.SetMag(1.)
-        # Sign of Phi1
-        sgn = j.Vect().Dot( Zplane.Cross(Bplane) )
-        sgn /= abs(sgn)
-        if abs(Zplane.Dot(Bplane)) > 1.: return -5.
-        value = sgn * math.acos( Zplane.Dot(Bplane) )
-        if value != value or math.isinf(value): return -5.
-        return value
-
-

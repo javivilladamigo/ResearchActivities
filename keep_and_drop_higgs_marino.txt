@@ -1,24 +1,26 @@
 # this is a comment
 drop * # start with all
-drop Electron*
+#drop Electron*
 keep Muon*
 keep Photon*
-keep H*
-keep JPsi
-drop Jet*
-drop HTXS*
-drop CorrT1*
-keep HLT*
-drop L1*
-drop FatJet*
-drop GenJet*
-drop SubGenJet*
-drop GenPart*
-drop GenVisTau*
-drop fixedGridRho*
-drop GenDressedLepton*
-drop SubJet*
-drop SV*
-drop TrigObj*
-drop Flag*
-drop Tau*
+keep H_* # keep Higgs
+keep JPsi*
+keep lheWeight
+keep lumiWeight
+#drop Jet*
+#drop HTXS*
+#drop CorrT1*
+keep HLT_Mu17_Photon30*
+#drop L1*
+#drop FatJet*
+#drop GenJet*
+#drop SubGenJet*
+#drop GenPart*
+#drop GenVisTau*
+#drop fixedGridRho*
+#drop GenDressedLepton*
+#drop SubJet*
+#drop SV*
+#drop TrigObj*
+#drop Flag*
+#drop Tau*
