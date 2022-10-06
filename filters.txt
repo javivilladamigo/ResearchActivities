@@ -1,0 +1,1 @@
+nMuon >= 2 && nPhoton >= 1 && Muon1_pt > 5. && Muon2_pt > 5. && Muon1_mediumPromptId && Muon2_mediumPromptId && minMuonPfIso < 0.15 && maxMuonPfIso < 0.15 && Photon1_pt > 15. && Photon1_mvaID_WP80 && Photon1_pixelSeed==0
