@@ -11,6 +11,7 @@ from higgs_marino import *
 
 
 import optparse
+
 usage = "usage: %prog [options]"
 parser = optparse.OptionParser(usage)
 
@@ -32,10 +33,10 @@ if len(options.list) > 0:
         for f in f.read().splitlines():
             if len(f) > 0: fileList += [REDIRECTOR + f]
 
-fileList = ["root://cms-xrd-global.cern.ch//store/mc/RunIISummer20UL18NanoAODv9/GluGluToH_HToJPsiG_JPsiToMuMu_TuneCP5_13TeV-madgraph-pythia8/NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v2/130000/9D1DB63A-4D8D-4947-B1F7-BABEB6553F4C.root"]
-
-
-p = PostProcessor(outputDir=options.output, inputFiles=fileList, cut=(None if 'JPsiG' in fileList[0] else "(nMuon >= 2 && nPhoton >= 1)"), branchsel=None, modules=[Higgs_marino()], jsonInput=None, histFileName=None, histDirName=None, outputbranchsel= "keep_and_drop_higgs_marino.txt", maxEntries=long(options.maxEntries))
+fileList = ["root://cms-xrd-global.cern.ch//store/mc/RunIISummer20UL18NanoAODv9/GluGluToH_HToJPsiG_JPsiToMuMu_TuneCP5_13TeV-madgraph-pythia8/NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v2/70000/FF49F3B9-055A-7942-8E5B-2B3028B33CB6.root"]
+# GluGluToH_HToJPsi     ->   /store/mc/RunIISummer20UL18NanoAODv9/GluGluToH_HToJPsiG_JPsiToMuMu_TuneCP5_13TeV-madgraph-pythia8/NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v2/70000/FF49F3B9-055A-7942-8E5B-2B3028B33CB6.root
+# QCD                   ->   /store/mc/RunIISummer20UL16NanoAODv9/QCD_Pt-30_MuEnrichedPt4_TuneCP5_13TeV_pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/130000/4DA5E108-3E3A-E443-A4A4-B6A16A7F265C.root
+p = PostProcessor(outputDir=options.output, inputFiles=fileList, cut=(None if 'JPsiG' in fileList[0] else "(nMuon >= 2 && nPhoton >= 1)"), branchsel=None, modules=[Higgs_marino()], jsonInput=None, histFileName=None, histDirName=None, outputbranchsel="keep_and_drop_higgs_marino.txt", maxEntries=long(options.maxEntries))
 
 p.run()
 

@@ -1,8 +1,11 @@
 # this is a comment
 drop * # start with all
 #drop Electron*
-keep Muon*
-keep Photon*
+keep iMuon
+keep Muon1*
+keep Muon2*
+keep iPhoton
+keep Photon1*
 keep H_* # keep Higgs
 keep JPsi*
 keep lheWeight
@@ -10,7 +13,7 @@ keep lumiWeight
 #drop Jet*
 #drop HTXS*
 #drop CorrT1*
-keep HLT_Mu17_Photon30*
+keep HLT_Mu*
 #drop L1*
 #drop FatJet*
 #drop GenJet*
