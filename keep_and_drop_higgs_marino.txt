@@ -1,12 +1,12 @@
 # this is a comment
 drop * # start with all
 #drop Electron*
-keep iMuon
+keep iMuon*
 keep Muon1*
 keep Muon2*
 keep iPhoton
 keep Photon1*
-keep H_* # keep Higgs
+keep HorZ_* # keep Higgs or Z boson
 keep JPsi*
 keep lheWeight
 keep lumiWeight
