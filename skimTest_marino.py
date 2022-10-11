@@ -33,9 +33,14 @@ if len(options.list) > 0:
         for f in f.read().splitlines():
             if len(f) > 0: fileList += [REDIRECTOR + f]
 
-fileList = ["root://cms-xrd-global.cern.ch//store/mc/RunIISummer20UL18NanoAODv9/GluGluToH_HToJPsiG_JPsiToMuMu_TuneCP5_13TeV-madgraph-pythia8/NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v2/70000/FF49F3B9-055A-7942-8E5B-2B3028B33CB6.root"]
-# GluGluToH_HToJPsi     ->   /store/mc/RunIISummer20UL18NanoAODv9/GluGluToH_HToJPsiG_JPsiToMuMu_TuneCP5_13TeV-madgraph-pythia8/NANOAODSIM/106X_upgrade2018_realistic_v16_L1v1-v2/70000/FF49F3B9-055A-7942-8E5B-2B3028B33CB6.root
-# QCD                   ->   /store/mc/RunIISummer20UL16NanoAODv9/QCD_Pt-30_MuEnrichedPt4_TuneCP5_13TeV_pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/130000/4DA5E108-3E3A-E443-A4A4-B6A16A7F265C.root
+fileList = ["/lustre/cmsdata/zucchett/Dataset/QCD_Pt-30_MuEnrichedPt4_TuneCP5_13TeV_pythia8_RunIISummer20UL16/4DA5E108-3E3A-E443-A4A4-B6A16A7F265C.root"]
+# GluGluToH_HToJPsi     ->   /lustre/cmsdata/zucchett/Dataset/GluGluToH_HToJPsiG_JPsiToMuMu_TuneCP5_13TeV-madgraph-pythia8_RunIISummer20UL16/147A56C1-E191-3842-84BB-81A243C2A4AD.root
+# ZToJPsiG              ->   /lustre/cmsdata/zucchett/Dataset/ZToJPsiG_JPsiToMuMu_TuneCP5_13TeV-madgraph-pythia8_RunIISummer20UL16/3CFD568D-76B9-3D4D-8750-5A29F1E2C278.root
+# QCD                   ->   /lustre/cmsdata/zucchett/Dataset/QCD_Pt-30_MuEnrichedPt4_TuneCP5_13TeV_pythia8_RunIISummer20UL16/BB9CEC64-DAB0-424C-B36E-840FB52120F3.root
+
+dir_file = "/lustre/cmsdata/zucchett/Dataset/QCD_Pt-30_MuEnrichedPt4_TuneCP5_13TeV_pythia8_RunIISummer20UL16/"
+fileList = [os.path.join(dir_file, f) for f in os.listdir(dir_file) if (os.path.isfile(os.path.join(dir_file, f)) and ".root" in f)]
+
 p = PostProcessor(outputDir=options.output, inputFiles=fileList, cut=(None if 'JPsiG' in fileList[0] else "(nMuon >= 2 && nPhoton >= 1)"), branchsel=None, modules=[Higgs_marino()], jsonInput=None, histFileName=None, histDirName=None, outputbranchsel="keep_and_drop_higgs_marino.txt", maxEntries=long(options.maxEntries))
 
 p.run()
