@@ -1,4 +1,4 @@
-void mergeTrees_all(const char *dirname="data.nosync/OutputTest/", const char *ext=".root", TString inputTree = "Events", TString outputTree = "mergedEvents", TString outputFile = "GluGluToH_HToJPsiG_JPsiToMuMu_TuneCP5_13TeV-madgraph-pythia8_RunIISummer20UL18.root")
+void mergeTrees_all(const char *dirname="data.nosync/QCD/", const char *ext=".root", TString inputTree = "Events", TString outputTree = "mergedEvents", TString outputFile = "QCD_Pt-30_MuEnrichedPt4_TuneCP5_13TeV_pythia8_RunIISummer20UL16.root")
 {
     
     
@@ -12,7 +12,7 @@ void mergeTrees_all(const char *dirname="data.nosync/OutputTest/", const char *e
         TList *list = new TList;
         TSystemFile *file;
         TString fname;
-
+        
         Int_t kFile = 0;
         Int_t nEntries = 0;
         Int_t totEntries;
@@ -21,14 +21,16 @@ void mergeTrees_all(const char *dirname="data.nosync/OutputTest/", const char *e
         cout << "Merging files in " << dirname << endl << endl;
         TIter next(files);
         while ((file=(TSystemFile*)next()))
-        {
+        {   
             fname = file->GetName();
-            
+            //if (fname == outputFile) gSystem->Exec(Form("rm %s", outputFile));
+
             if (!file->IsDirectory() && fname.EndsWith(ext) && fname != ".DS_Store" && fname != outputFile)
             {
                 cout << "* Adding " << fname.Data() << " for merging..." << endl;
                 f = new TFile(dirname + fname);
                 TTree *tree = (TTree*)f->Get(inputTree);
+                //Nevents_in = (TH1F*)f->Get("Hists/Acceptance");
                 cout << "nEvents: " << tree->GetEntries() << endl;
                 nEntries += tree->GetEntries();
                 list->Add(tree);
@@ -47,7 +49,7 @@ void mergeTrees_all(const char *dirname="data.nosync/OutputTest/", const char *e
             mergedTree->SetName(outputTree);
             mergedTree->Write();
             mergedFile->Close();
-
+            
             if (nEntries == totEntries) { cout << endl << endl << "Merging of " << kFile << " files successfully completed. Total of " << totEntries << " events have been saved as a `"<< outputTree << "` TTree in " << outputFile << endl << endl; }
         }
         else { cout << "No adequate files found, make sure dirname is properly written and there are files with the extension `" << ext << "` inside." << endl; }
