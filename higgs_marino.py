@@ -34,7 +34,7 @@ class Higgs_marino(Module):
         self.hists = {}
         self.hists["Nevents"] = ROOT.TH1F("Nevents", "Nevents", 1, 0, 1)
         self.hists["Acceptance"] = ROOT.TH1F("Acceptance", "Acceptance", 5, -0.5, 4.5)
-        
+
         self.hists["phScaleUp"] = ROOT.TH1F("phScaleUp", "", 125, 76, 200)
         self.hists["phScaleDown"] = ROOT.TH1F("phScaleDown", "", 125, 76, 200)
         self.hists["phResUp"] = ROOT.TH1F("phResUp", "", 125, 76, 200)
@@ -59,7 +59,7 @@ class Higgs_marino(Module):
     
     def endJob(self):
         Module.endJob(self)
-        if self.verbose >= 0: print "+ Module ended successfully."#, self.h_events.GetEntries(), "events analyzed"
+        if self.verbose >= 0: print "+ Module ended successfully."#, self.HorZ_events.GetEntries(), "events analyzed"
         pass
         
     def beginFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
@@ -125,20 +125,20 @@ class Higgs_marino(Module):
         self.out.branch("JPsi_mass_muScaleUp", "F")
         self.out.branch("JPsi_mass_muScaleDown", "F")
 
-        self.out.branch("H_pt", "F")
-        self.out.branch("H_eta", "F")
-        self.out.branch("H_phi", "F")
-        self.out.branch("H_mass", "F")
-        self.out.branch("H_dEta", "F")
-        self.out.branch("H_dPhi", "F")
-        self.out.branch("H_dR", "F")
-        self.out.branch("H_mass_muScaleUp", "F")
-        self.out.branch("H_mass_muScaleDown", "F")
-        self.out.branch("H_mass_phScaleUp", "F")
-        self.out.branch("H_mass_phScaleDown", "F")
-        self.out.branch("H_mass_phResUp", "F")
-        self.out.branch("H_mass_phResDown", "F")
-        self.out.branch("H_mass_noCorr", "F")
+        self.out.branch("HorZ_pt", "F")
+        self.out.branch("HorZ_eta", "F")
+        self.out.branch("HorZ_phi", "F")
+        self.out.branch("HorZ_mass", "F")
+        self.out.branch("HorZ_dEta", "F")
+        self.out.branch("HorZ_dPhi", "F")
+        self.out.branch("HorZ_dR", "F")
+        self.out.branch("HorZ_mass_muScaleUp", "F")
+        self.out.branch("HorZ_mass_muScaleDown", "F")
+        self.out.branch("HorZ_mass_phScaleUp", "F")
+        self.out.branch("HorZ_mass_phScaleDown", "F")
+        self.out.branch("HorZ_mass_phResUp", "F")
+        self.out.branch("HorZ_mass_phResDown", "F")
+        self.out.branch("HorZ_mass_noCorr", "F")
     
         self.out.branch("lumiWeight", "F")
         self.out.branch("lheWeight", "F")
@@ -172,8 +172,8 @@ class Higgs_marino(Module):
         self.out.branch("eventMuonEGWeightLumi", "F")
         self.out.branch("eventJPsiWeightLumi", "F")
         self.out.branch("eventWeightLumi", "F")
-        
 
+        
         self.fileName = inputFile.GetName()
         self.sampleName = getNameFromFile(self.fileName)
         
@@ -389,6 +389,7 @@ class Higgs_marino(Module):
         self.hists["Nevents"].Fill(0, lheWeight)
         self.hists["Acceptance"].Fill(0, lheWeight)
         self.hists["Cutflow"].Fill(0, lheWeight)
+
         
 
 
@@ -433,12 +434,12 @@ class Higgs_marino(Module):
             for i in range(event.nMuon):
                 for j in range(event.nMuon):
                     # muon filters
-                    if i == j or event.Muon_charge[i] == event.Muon_charge[j] or event.Muon_pt[i] < self.thMuons or event.Muon_pt[j] < self.thMuons or abs(event.Muon_eta[i]) > 2.4  or abs(event.Muon_eta[j]) > 2.4 or not event.Muon_mediumPromptId[i] or not event.Muon_mediumPromptId[j] or event.Muon_pfRelIso04_all[i] >= 0.15 or event.Muon_pfRelIso04_all[j] >= 0.15: continue
+                    if i == j or event.Muon_charge[i] == event.Muon_charge[j] or event.Muon_pt[i] < 5. or event.Muon_pt[j] < 5. or max(event.Muon_pt[i], event.Muon_pt[j]) <= 10. or abs(event.Muon_eta[i]) > 2.4  or abs(event.Muon_eta[j]) > 2.4 or not event.Muon_mediumId[i] or not event.Muon_mediumId[j]: continue
                     
                     p0 = -1
                     for k in range(event.nPhoton):
                         # photon filters
-                        if event.Photon_pt[k] < self.thPhoton or abs(event.Photon_eta[k]) > 2.4 or not event.Photon_mvaID_WP80[k] or event.Photon_pixelSeed[k] != 0: continue
+                        if event.Photon_pt[k] < 15. or abs(event.Photon_eta[k]) > 2.4 or not event.Photon_mvaID_WP90[k] or event.Photon_pixelSeed[k] != 0: continue
                         valid_event = True # the event passed muon and photon filters
 
                         if p0 < 0: p0 = k
@@ -448,8 +449,13 @@ class Higgs_marino(Module):
                         tmuon2.SetPtEtaPhiM(event.Muon_pt[j], event.Muon_eta[j], event.Muon_phi[j], event.Muon_mass[j])
                         DR = tmuon1.DeltaR(tmuon2)
                         if DR < minDR:
-                            minDR, m1, m2 = DR, i, j
+                            #minDR, m1, m2 = DR, i, j
+                            minDR = DR
                             
+                            if (event.Muon_pt[i] >= event.Muon_pt[j]):
+                                m1, m2 = i, j
+                            else:
+                                m1, m2 = j, i
         if not valid_event:
             return False
 
@@ -487,15 +493,15 @@ class Higgs_marino(Module):
 
         
         
-            h = jpsi + photon
+            HorZ = jpsi + photon
             
-            h_noCorr = muon1NoCorr + muon2NoCorr + photon
-            h_muScaleUp = jpsi_muScaleUp + photon
-            h_muScaleDown = jpsi_muScaleDown + photon
-            h_phScaleUp = jpsi + photonScaleUp
-            h_phScaleDown = jpsi + photonScaleDown
-            h_phResUp = jpsi + photonResUp
-            h_phResDown = jpsi + photonResDown
+            HorZ_noCorr = muon1NoCorr + muon2NoCorr + photon
+            HorZ_muScaleUp = jpsi_muScaleUp + photon
+            HorZ_muScaleDown = jpsi_muScaleDown + photon
+            HorZ_phScaleUp = jpsi + photonScaleUp
+            HorZ_phScaleDown = jpsi + photonScaleDown
+            HorZ_phResUp = jpsi + photonResUp
+            HorZ_phResDown = jpsi + photonResDown
 
             jpsi_pt = jpsi.Pt()
             jpsi_eta = jpsi.Eta()
@@ -505,13 +511,13 @@ class Higgs_marino(Module):
             jpsi_dPhi = abs(muon1.DeltaPhi(muon2))
             jpsi_dR = muon1.DeltaR(muon2)
         
-            h_pt = h.Pt()
-            h_eta = h.Eta()
-            h_phi = h.Phi()
-            h_mass = h.M()
-            h_dEta = abs(jpsi.Eta() - photon.Eta())
-            h_dPhi = abs(jpsi.DeltaPhi(photon))
-            h_dR = jpsi.DeltaR(photon)
+            HorZ_pt = HorZ.Pt()
+            HorZ_eta = HorZ.Eta()
+            HorZ_phi = HorZ.Phi()
+            HorZ_mass = HorZ.M()
+            HorZ_dEta = abs(jpsi.Eta() - photon.Eta())
+            HorZ_dPhi = abs(jpsi.DeltaPhi(photon))
+            HorZ_dR = jpsi.DeltaR(photon)
         
             minMuonPfIso = min(event.Muon_pfRelIso04_all[m1], event.Muon_pfRelIso04_all[m2])
             maxMuonPfIso = max(event.Muon_pfRelIso04_all[m1], event.Muon_pfRelIso04_all[m2])
@@ -634,24 +640,25 @@ class Higgs_marino(Module):
             self.out.fillBranch("JPsi_dEta", jpsi_dEta)
             self.out.fillBranch("JPsi_dPhi", jpsi_dPhi)
             self.out.fillBranch("JPsi_dR", jpsi_dR)
-            self.out.fillBranch("H_pt", h_pt)
-            self.out.fillBranch("H_eta", h_eta)
-            self.out.fillBranch("H_phi", h_phi)
-            self.out.fillBranch("H_mass", h_mass)
-            self.out.fillBranch("H_dEta", h_dEta)
-            self.out.fillBranch("H_dPhi", h_dPhi)
-            self.out.fillBranch("H_dR", h_dR)
+            self.out.fillBranch("HorZ_pt", HorZ_pt)
+            self.out.fillBranch("HorZ_eta", HorZ_eta)
+            self.out.fillBranch("HorZ_phi", HorZ_phi)
+            self.out.fillBranch("HorZ_mass", HorZ_mass)
+            self.out.fillBranch("HorZ_dEta", HorZ_dEta)
+            self.out.fillBranch("HorZ_dPhi", HorZ_dPhi)
+            self.out.fillBranch("HorZ_dR", HorZ_dR)
             self.out.fillBranch("JPsi_mass_muScaleUp", jpsi_muScaleUp.M())
             self.out.fillBranch("JPsi_mass_muScaleDown", jpsi_muScaleDown.M())
-            self.out.fillBranch("H_mass_muScaleUp", h_muScaleUp.M())
-            self.out.fillBranch("H_mass_muScaleDown", h_muScaleDown.M())
-            self.out.fillBranch("H_mass_phScaleUp", h_phScaleUp.M())
-            self.out.fillBranch("H_mass_phScaleDown", h_phScaleDown.M())
-            self.out.fillBranch("H_mass_phResUp", h_phResUp.M())
-            self.out.fillBranch("H_mass_phResDown", h_phResDown.M())
-            self.out.fillBranch("H_mass_noCorr", h_noCorr.M())
+            self.out.fillBranch("HorZ_mass_muScaleUp", HorZ_muScaleUp.M())
+            self.out.fillBranch("HorZ_mass_muScaleDown", HorZ_muScaleDown.M())
+            self.out.fillBranch("HorZ_mass_phScaleUp", HorZ_phScaleUp.M())
+            self.out.fillBranch("HorZ_mass_phScaleDown", HorZ_phScaleDown.M())
+            self.out.fillBranch("HorZ_mass_phResUp", HorZ_phResUp.M())
+            self.out.fillBranch("HorZ_mass_phResDown", HorZ_phResDown.M())
+            self.out.fillBranch("HorZ_mass_noCorr", HorZ_noCorr.M())
             self.out.fillBranch("lumiWeight", self.lumiWeight)
-            self.out.fillBranch("lheWeight", lheWeight)
+            self.out.fillBranch("lheWeight", lheWeight) # fill only the nb of events
+        
 
 
 
@@ -733,10 +740,10 @@ class Higgs_marino(Module):
             
             # Uncertainties
 
-            self.hists["phScaleUp"].Fill(h_phScaleUp.M(), 1.)
-            self.hists["phScaleDown"].Fill(h_phScaleDown.M(), 1.)
-            self.hists["phResUp"].Fill(h_phResUp.M(), 1.)
-            self.hists["phResDown"].Fill(h_phResDown.M(), 1.)
+            self.hists["phScaleUp"].Fill(HorZ_phScaleUp.M(), 1.)
+            self.hists["phScaleDown"].Fill(HorZ_phScaleDown.M(), 1.)
+            self.hists["phResUp"].Fill(HorZ_phResUp.M(), 1.)
+            self.hists["phResDown"].Fill(HorZ_phResDown.M(), 1.)
             
             # Cutflows
             
@@ -765,5 +772,4 @@ class Higgs_marino(Module):
                                         self.hists["Cutflow"].Fill(11, lheWeight)
                                         if (jpsi_mass> 3.0 and jpsi_mass < 3.2) or (jpsi_mass > 3.6 and jpsi_mass < 3.8):
                                             self.hists["Cutflow"].Fill(12, lheWeight)
-            
             return True
