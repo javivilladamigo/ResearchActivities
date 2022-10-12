@@ -2,5 +2,5 @@
 *.root
 __pycache__/
 MadGraph5_aMCatNLO/
-*.pdf
+PPP1_4.pdf
 data.nosync/
