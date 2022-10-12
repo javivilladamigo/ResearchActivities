@@ -38,7 +38,7 @@ fileList = ["/lustre/cmsdata/zucchett/Dataset/QCD_Pt-30_MuEnrichedPt4_TuneCP5_13
 # ZToJPsiG              ->   /lustre/cmsdata/zucchett/Dataset/ZToJPsiG_JPsiToMuMu_TuneCP5_13TeV-madgraph-pythia8_RunIISummer20UL16/3CFD568D-76B9-3D4D-8750-5A29F1E2C278.root
 # QCD                   ->   /lustre/cmsdata/zucchett/Dataset/QCD_Pt-30_MuEnrichedPt4_TuneCP5_13TeV_pythia8_RunIISummer20UL16/BB9CEC64-DAB0-424C-B36E-840FB52120F3.root
 
-dir_file = "/lustre/cmsdata/zucchett/Dataset/QCD_Pt-30_MuEnrichedPt4_TuneCP5_13TeV_pythia8_RunIISummer20UL16/"
+dir_file = "/lustre/cmsdata/zucchett/Dataset/GluGluToH_HToJPsiG_JPsiToMuMu_TuneCP5_13TeV-madgraph-pythia8_RunIISummer20UL16/"
 fileList = [os.path.join(dir_file, f) for f in os.listdir(dir_file) if (os.path.isfile(os.path.join(dir_file, f)) and ".root" in f)]
 
 p = PostProcessor(outputDir=options.output, inputFiles=fileList, cut=(None if 'JPsiG' in fileList[0] else "(nMuon >= 2 && nPhoton >= 1)"), branchsel=None, modules=[Higgs_marino()], jsonInput=None, histFileName=None, histDirName=None, outputbranchsel="keep_and_drop_higgs_marino.txt", maxEntries=long(options.maxEntries))
