@@ -15,10 +15,6 @@ and enter your t2 password (which may differ from the gate one) when prompted.
 
 ```$ cmsenv```
 
-* and enter the proxy for gaining access to the grid:
-
-```$ X509_USER_PROXY=/homeui/zucchett/tmp/x509up```
-
 
 # About passwords:
 
