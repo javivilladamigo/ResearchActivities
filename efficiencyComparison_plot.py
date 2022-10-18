@@ -10,9 +10,9 @@ QCD_color, Z_color, H_color = ["#af272f", "#608fbe", "darkorange"]
 
 
 
-def quotient(a, b): # quotient uncertainty
-    y = a / b
-    uy = y * (1. / a + 1. / b) ** 0.5
+def quotient(k, N): # quotient uncertainty
+    y = k / N 
+    uy = (1 / N) * (k * (1 - k / N))**0.5
     return y, uy
 
 
