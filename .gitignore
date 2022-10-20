@@ -3,4 +3,13 @@
 __pycache__/
 MadGraph5_aMCatNLO/
 PPP1_4.pdf
+commented-report_ResearchActivities.pdf
 data.nosync/
+*.aux
+*.blg
+*.bbl
+*.fls
+*.log
+*.out
+*.fdb_latexmk
+
