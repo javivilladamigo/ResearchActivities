@@ -47,11 +47,8 @@ using the option ```-r``` (recursive) to copying entire folders. The option ```-
 
 ```$ scp -oProxyJump=jamarino@gate.pd.infn.it /path/to/file jamarino@t2-ui-12:/lustre/cmswork/jamarino/CMSSW_10_6_20/src/NanoSkim/Skimmer/```
 
-or (untested):
 
-```$ scp -P 2222 file.ext username@domain:~/```
-
-* From remote:
+* From remote (untested):
 
 ```username@domain $ scp dragonmnl@local:/path/to/file.ext ~/```
 
