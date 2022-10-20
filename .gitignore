@@ -12,4 +12,5 @@ data.nosync/
 *.log
 *.out
 *.fdb_latexmk
-
+*.gz
+*.toc
