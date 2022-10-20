@@ -1,10 +1,12 @@
 .DS_Store
 *.root
+data.nosync/
 __pycache__/
 MadGraph5_aMCatNLO/
+
 PPP1_4.pdf
+MarinoJavier_researchActivities_report.pdf
 commented-report_ResearchActivities.pdf
-data.nosync/
 
 *.aux
 *.bbl
