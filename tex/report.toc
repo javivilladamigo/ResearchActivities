@@ -1,0 +1,15 @@
+\babel@toc {english}{}
+\contentsline {section}{\numberline {1}Introduction}{1}{section.1}% 
+\contentsline {section}{\numberline {2}Objectives}{1}{section.2}% 
+\contentsline {section}{\numberline {3}Trigger and selection efficiencies}{2}{section.3}% 
+\contentsline {subsection}{\numberline {3.1}The uncertainty of the efficiency}{3}{subsection.3.1}% 
+\contentsline {section}{\numberline {4}Data samples}{4}{section.4}% 
+\contentsline {subsection}{\numberline {4.1}The selection efficiency for {\it HLT\_Mu17\_Photon30}}{4}{subsection.4.1}% 
+\contentsline {section}{\numberline {5}Results}{5}{section.5}% 
+\contentsline {subsection}{\numberline {5.1}Muon1: $p_{\rm T}> 15\textrm { }\mathrm {GeV}$, muon2: $p_{\rm T}> 10\textrm { }\mathrm {GeV}$, photon: $p_{\rm T}>15\textrm { }\mathrm {GeV}$}{5}{subsection.5.1}% 
+\contentsline {subsection}{\numberline {5.2}Muon1: $p_{\rm T}> 18\textrm { }\mathrm {GeV}$, photon: $p_{\rm T}>24\textrm { }\mathrm {GeV}$, $\Delta R(\mu -\mu )<0.4$ }{6}{subsection.5.2}% 
+\contentsline {subsection}{\numberline {5.3}Muon1: $p_{\rm T}> 15\textrm { }\mathrm {GeV}$, photon: $p_{\rm T}>20\textrm { }\mathrm {GeV}$, $2\textrm { }\mathrm {GeV}<m_{\mu \mu }<4\textrm { }\mathrm {GeV}$}{7}{subsection.5.3}% 
+\contentsline {subsection}{\numberline {5.4}Muon1: $p_{\rm T}> 10\textrm { }\mathrm {GeV}$, muon2: $p_{\rm T}> 5\textrm { }\mathrm {GeV}$, photon: $p_{\rm T}>15\textrm { }\mathrm {GeV}$, $2\textrm { }\mathrm {GeV}<m_{\mu \mu }<4\textrm { }\mathrm {GeV}$}{8}{subsection.5.4}% 
+\contentsline {subsection}{\numberline {5.5}Muon1: $p_{\rm T}> 10\textrm { }\mathrm {GeV}$, muon2: $p_{\rm T}> 5\textrm { }\mathrm {GeV}$, photon: $p_{\rm T}>22.7\textrm { }\mathrm {GeV}$, $2\textrm { }\mathrm {GeV}<m_{\mu \mu }<4\textrm { }\mathrm {GeV}$}{8}{subsection.5.5}% 
+\contentsline {subsection}{\numberline {5.6}Summary of results}{9}{subsection.5.6}% 
+\contentsline {section}{\numberline {6}Conclusions}{10}{section.6}% 
