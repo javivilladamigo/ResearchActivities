@@ -202,7 +202,7 @@
 
 
 
-\title[]{{\large  Analysis of the current trigger and selection efficiency for the process \texorpdfstring{$\H \rightarrow \JPsi\gamma \rightarrow \mu\mu\gamma$} at CMS and comparison with new trigger proposals}} % The short title appears at the bottom of every slide, the full title is only on the title page
+\title[]{{\large  Analysis of the current trigger and selection efficiency for the process $\H \rightarrow \JPsi\gamma \rightarrow \mu\mu\gamma$ at CMS and comparison with new trigger proposals}} % The short title appears at the bottom of every slide, the full title is only on the title page
 
 
 
@@ -245,7 +245,7 @@
     \begin{frame}[t]{Introduction}
 
         \begin{block}<1->{A word on physics motivations}
-            The Higgs boson is considered to be discovered in 2012, when a new particle with the properties predicted by Standard Model (SM) was observed by CMS and ATLAS collaborations. Yukawa couplings to first and second-generation quarks are still to be measured.
+            The Higgs boson is considered to be discovered in 2012, when a new particle with the properties predicted by the Standard Model (SM) was observed by CMS and ATLAS collaborations. Yukawa couplings to first and second-generation quarks are still to be measured.
         \end{block}
 
         \begin{columns}[c]
@@ -279,7 +279,7 @@
 	    \footnotetext{\cite{mainarticle}.}
 	    
 	    \begin{itemize}
-			\item The cumulative yield of the decay is \textcolor{unipd}{proportional to the branching ratio (BR)}.
+			\item The BR($\H\rightarrow\JPsi\gamma$) is \textcolor{unipd}{proportional to the ${\rm H}{\rm c}{\rm \bar{c}}$ coupling}.
 		\end{itemize}
 
 	\end{frame}
@@ -319,7 +319,7 @@
     \begin{frame}[t]{Objectives}
 
         \begin{block}<1->{Trigger}
-            In order to filter the amount of data that is recorded from each collision at the LHC, triggers are used. Current High Level Trigger requires the presence of a muon and a photon exceeding 17 and 30 $\GeV$ in the final state.
+            In order to filter the amount of data that is recorded from each collision at the LHC, L1 and High Level triggers are used. Current High Level Trigger requires the presence of a muon and a photon exceeding 17 and 30 $\GeV$, respectively, in the final state.
         \end{block}
         
         \vspace{1cm}
@@ -339,21 +339,24 @@
         \vspace{0.3cm}
         
         \begin{columns}[c]
+
             \column{0.5\textwidth}
         
+            The \red{selection efficiency}:
+
+            \begin{equation*}
+                \red{\varepsilon_{\rm selection}} = \frac{{\rm \#\ events\ passing\ selection}}{{\rm \#\ total\ events}}
+            \end{equation*}
+
+            \column{0.5\textwidth}
+
             The \red{trigger efficiency}:
         
             \begin{equation*}
                 \red{\varepsilon_{\rm trigger}} = \frac{{\rm \#\ events\ passing\ HLT\ \& \ selection}}{{\rm \#\ events\ passing\ selection}}
             \end{equation*}
             
-            \column{0.5\textwidth}
 
-            The \red{selection efficiency}:
-
-            \begin{equation*}
-                \red{\varepsilon_{\rm selection}} = \frac{{\rm \#\ events\ passing\ selection}}{{\rm \#\ total\ events}}
-            \end{equation*}
         
         \end{columns}
         
@@ -370,7 +373,7 @@
 
     %--------------------------------------------------------------------------
 	
-    \begin{frame}[t]{Example calculation of ${\pmb \varepsilon}$ for \textit{\textbf{HLT\_Mu17\_Photon30}}}
+    \begin{frame}[t]{Example calculation of $\varepsilon$ for \textit{HLT\_Mu17\_Photon30}}
         
         \vspace{1cm}
 
@@ -520,14 +523,14 @@
     \section{Conclusions}
     
     \begin{frame}[t]{Conclusions}
-
+		\vspace{20pt}
         \begin{itemize}
-            \item \red{Comparison} between the standard selection associated to {\it HLT\_Mu17\_Photon30} and other possibilities has been made.
-            \item Increases on efficiency of the Higgs boson signal are \red{very limited}.
-            \item Selections including criteria beyond purely kinematical cuts are more efficient.
-            \item Rising slightly the photon momentum threshold decreases QCD efficiency. 
-            \item 3-4 selection criteria are more efficient than the current one.
-            \item The trigger efficiency corresponding to these cuts should be obtained in dedicated simulations.
+            \item \red{Comparison} between the standard selection associated to {\it HLT\_Mu17\_Photon30} and other possibilities has been made.\vspace{5pt}
+            \item Increases on efficiency of the Higgs boson signal are \red{very limited}.\vspace{5pt}
+            \item Selections including \red{criteria beyond purely kinematical} cuts are \red{more efficient}.
+            \item Rising slightly the \red{photon momentum threshold} decreases QCD efficiency.\vspace{5pt}
+            \item Four selection criteria are \red{more efficient} than the current one.\vspace{5pt}
+            \item The \red{trigger efficiency} corresponding to these cuts should be obtained in \red{dedicated simulations}.
         \end{itemize}
 
     \end{frame}
