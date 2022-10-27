@@ -22,3 +22,5 @@ commented-report_ResearchActivities.pdf
 *.nav
 *.run.xml
 *.snm
+
+tex/script_slides.*
