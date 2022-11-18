@@ -8,6 +8,8 @@ PPP1_4.pdf
 MarinoJavier_researchActivities_report.pdf
 commented-report_ResearchActivities.pdf
 
+*.tex
+*.bib
 *.aux
 *.bbl
 *.blg
